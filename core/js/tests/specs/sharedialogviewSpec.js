@@ -22,6 +22,7 @@
 /* global oc_appconfig, sinon */
 describe('OC.Share.ShareDialogView', function() {
 	var $container;
+	var oldConfig;
 	var oldAppConfig;
 	var autocompleteStub;
 	var avatarStub;
@@ -40,6 +41,9 @@ describe('OC.Share.ShareDialogView', function() {
 		// horrible parameters
 		$('#testArea').append('<input id="allowShareWithLink" type="hidden" value="yes">');
 		$container = $('#shareContainer');
+		oldConfig = window.oc_config;
+		window.oc_config = window.oc_config || {};
+		window.oc_config['sharing.maxAutocompleteResults'] = 0;
 		/* jshint camelcase:false */
 		oldAppConfig = _.extend({}, oc_appconfig.core);
 		oc_appconfig.core.enforcePasswordForPublicLink = false;
@@ -108,6 +112,7 @@ describe('OC.Share.ShareDialogView', function() {
 	});
 	afterEach(function() {
 		OC.currentUser = oldCurrentUser;
+		window.oc_config = oldConfig;
 		/* jshint camelcase:false */
 		oc_appconfig.core = oldAppConfig;
 
